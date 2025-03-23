@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Input } from "@rneui/themed";
 import { Button } from "@rneui/themed";
 import { useForm, Controller } from "react-hook-form";
-
+import { inputControll } from "./componentsControll";
 export default function Form() {
     const { control, handleSubmit, formState: { errors } } = useForm();
     const onsubmit = (data) => {
@@ -25,33 +25,10 @@ export default function Form() {
     );
 }
 
-function inputControll({ text, min, message, msgRequired, nameI, control, errors }) {
-    return (
-        <>
-            <Controller
-                control={control}
-                name={nameI}
-                rules={{
-                    required: msgRequired,
-                    minLength: min && { value: min, message },
-                }}
-                render={({ field: { onChange, value } }) => (
-                    <Input
-                        placeholder={text}
-                        value={value}
-                        onChangeText={onChange}
-                    />
-                )}
-            />
-            {errors[nameI] && <Text style={styles.textError}>{errors[nameI]?.message}</Text>}
-        </>
-    );
-}
 
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 70,
     },
     form: {
         marginTop: 30,
