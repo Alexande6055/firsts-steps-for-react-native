@@ -1,7 +1,8 @@
 import { Controller } from "react-hook-form";
 import { Input } from "@rneui/themed";
-import { Text, StyleSheet } from "react-native";
-export function inputControll({ text, min, message, msgRequired, nameI, control, errors, textLabel,secureTextEntry }) {
+import { Text, StyleSheet,View} from "react-native";
+import SucessOverlay from "./sucessOverlay";
+export function inputControll({ text, min, message, msgRequired, nameI, control, errors, textLabel, secureTextEntry }) {
     return (
         <>
             <Controller
@@ -26,7 +27,42 @@ export function inputControll({ text, min, message, msgRequired, nameI, control,
         </>
     );
 }
+//------------------------------------------------------------------------------------------
+export function Register(isVisible,control,errors,password) {
+    return (
+        <>
+            {/**
+                 * component for confirm your pasword
+                 */}
+            <View style={{ display: isVisible ? 'flex' : 'none' }}>
+                <Controller
+                    control={control}
+                    name='verifiPassword'
+                    rules={{
+                        required: 'this field is required',
+                        minLength: { value: 7, message: 'this field must be at least seven characters' },
+                        validate: (value) =>
+                            value === password || 'the paswords no match',
 
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                        <Input
+                            secureTextEntry={true}
+                            labelStyle={StyleSheet.create({ color: 'black' })}
+                            label="Verifi Password:"
+                            placeholder='Write validate password'
+                            value={value}
+                            onChangeText={onChange}
+                        />
+                    )}
+                />
+                {errors.verifiPassword && <Text style={styles.textError}>{errors.verifiPassword.message}</Text>}
+            </View>
+
+        </>
+    );
+}
+//------------------------------------------------------------------------------------------
 
 const styles = StyleSheet.create({
     textError: {
